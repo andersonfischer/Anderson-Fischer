@@ -1,0 +1,53 @@
+// SkynetHK.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <cstdlib>
+#include <iostream>
+#include <ctime>
+
+using namespace std;
+
+int main()
+{	
+	srand(static_cast<unsigned int>(time(0)));
+	// setting variables as our highest and lowest possible numbers
+	int searchGridHighNumber = 64;
+	int searchGridLowNumber = 1;
+	//choosing a random number between 1 and 64
+
+	int secretNumber = rand() % 64 + 1;
+	// initial values of attempts
+	int tries = 0;
+	int guess = 0;
+
+	cout << "\tWelcome, we are the US Government and we are trying to Bomb you!:)\n\n";
+	do {	// Algorithm that determines the guess
+		guess = ((searchGridHighNumber - searchGridLowNumber) / 2) + searchGridLowNumber;
+		
+		cout << "We are scanning for your location now\n\n";
+		
+		++tries;
+		//looping process of guesses and changes it makes to the Max and Min limits to get closer to guessing the number
+		if (guess > secretNumber)
+		{
+			cout << "Scanned area " << guess << " but the area was found to be higher than the true location of " << secretNumber << " !\n\n";
+			searchGridHighNumber = guess - 1;
+			cout << "The new High number is " << searchGridHighNumber << " !\n\n";
+		}
+		else if (guess < secretNumber)
+		{
+			cout << "Scanned area " << guess << " but the area was found to be lower than the true location of " << secretNumber << " !\n\n";
+			searchGridLowNumber = guess + 1;
+			cout << "The new Low number is " << searchGridLowNumber << " !\n\n";
+		}
+		else
+		{
+			cout << "\nThat's it!  Your location was " << guess << " We got you in " << tries << " guesses!\n";
+		}
+		// while loop that guesses again if the guess is wrong
+	} while (guess != secretNumber);
+	system("pause");
+	return 0;
+}
+
