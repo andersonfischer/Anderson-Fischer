@@ -1,0 +1,132 @@
+// SkynetHK4.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <cstdlib>
+#include <iostream>
+#include <ctime>
+#include <string>
+
+using namespace std;
+int player(int secretNumber)
+{
+	cout << "Try and find where the people are hiding!\n\n";
+	int tries = 0;
+	int userGuess = 0;
+	while (userGuess != secretNumber)
+	{
+		cout << "Enter a Location:";
+		cin >> userGuess;
+
+		if (userGuess > secretNumber)
+		{
+			cout << "That guess was too high!\n\n";
+		}
+		else if (userGuess < secretNumber)
+		{
+			cout << "That guess was too low!\n\n";
+		}
+		else 
+		{
+			cout << "That's exactly right!\n\n";
+		}
+		tries++;
+	}
+	cout << "It took you " << tries << " to figure it out!\n\n";
+	return tries;
+}
+
+int AIbinary(int secretNumber, int searchGridHighNumber, int searchGridLowNumber)
+{
+	// initial values of attempts
+	int tries = 0;
+	int guess = 0;
+
+	cout << "\tWelcome, we are the US Government and we are trying to Bomb you!:)\n\n";
+	do {	// Algorithm that determines the guess
+		guess = ((searchGridHighNumber - searchGridLowNumber) / 2) + searchGridLowNumber;
+
+		cout << "We are scanning for your location now\n\n";
+
+		++tries;
+		//looping process of guesses and changes it makes to the Max and Min limits to get closer to guessing the number
+		if (guess > secretNumber)
+		{
+			cout << "Scanned area " << guess << " but the area was found to be higher than the true location of " << secretNumber << " !\n\n";
+			searchGridHighNumber = guess - 1;
+			cout << "The new High number is " << searchGridHighNumber << " !\n\n";
+		}
+		else if (guess < secretNumber)
+		{
+			cout << "Scanned area " << guess << " but the area was found to be lower than the true location of " << secretNumber << " !\n\n";
+			searchGridLowNumber = guess + 1;
+			cout << "The new Low number is " << searchGridLowNumber << " !\n\n";
+		}
+		else
+		{
+			cout << "\nThat's it!  Your location was " << guess << " We got you in " << tries << " guesses!\n";
+		}
+		// while loop that guesses again if the guess is wrong
+	} while (guess != secretNumber);
+	return tries;
+}
+
+int AIlinear(int secretNumber, int searchGridHighNumber, int searchGridLowNumber)\
+{
+	int tries = 0;
+
+	cout << "This is the Canadian Government and we are doing the best we can eh'.\n\n";
+	for (int g = searchGridLowNumber; g < searchGridHighNumber; g++)
+	{
+		if (g == secretNumber)
+		{
+			cout << "Finally we got it \n\n";
+			break;
+		}
+		else
+		{
+			cout << "Whoops, we guessed " << g << ". We'll getcha soon!\n\n";
+		}
+		tries++;
+	}
+	return tries;
+}
+
+int main()
+{
+	srand(static_cast<unsigned int>(time(0)));
+	bool keepRun = true;
+	do
+	{
+		// setting variables as our highest and lowest possible numbers
+		int searchGridHighNumber = 64;
+		int searchGridLowNumber = 1;
+		//choosing a random number between 1 and 64
+		int secretNumber = rand() % 64 + 1;
+
+		int Ptries = player(secretNumber);
+		int Vtries = AIbinary(secretNumber, searchGridHighNumber, searchGridLowNumber);
+		int Xtries = AIlinear(secretNumber, searchGridHighNumber, searchGridLowNumber);
+
+		if (Ptries < Vtries && Ptries < Xtries)
+		{
+			cout << "YOU WIN!\n\n";
+		}
+		else if (Vtries < Ptries && Vtries < Xtries)
+		{
+			cout << "The Binary search method wins!\n\n";
+		}
+		else
+		{
+			cout << "The Linear search method wins!\n\n";
+		}
+
+		cout << "Do you want to play again?  yes or no? \n\n";
+		string str;
+		cin >> str;
+		keepRun = (str == "yes");
+
+	} while (keepRun);
+	system("pause");
+	return 0;
+}
