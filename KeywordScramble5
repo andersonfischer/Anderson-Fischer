@@ -1,0 +1,55 @@
+// Assignment5.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <ctime>
+#include <cctype>
+using namespace std;
+
+int main()
+{
+	//setting up the words and hints for the scrambler
+	vector<string> keywords({"love", "hate", "money", "pup", "bite", "D.Va", "13", "Chihuahua", "Naruto", "Fire"});
+	vector<string> hints({"What is l___, baby don't hurt me no more", "h___ me today, h___ me tomorrow", "Some people got to have it. Some people really need it.", "Scooby, a p__ named Scooby Doo" , "Mosquito", "My favorite Overwatch hero", "My favorite number", "My families dogs", "My favorite anime", "I fell in to a burning ring of f___."});
+	//random number generator
+	srand(static_cast<unsigned int>(time(0)));
+	//starting the program with a message
+	cout << "Using pop culture and personal information, I have devised a coded porgram that is inpenetrable(hopefully).  Try guessing the three code words.\n\n";
+	
+	// a for loop that checks for three correct answers
+	for (int I = 0; I < 3; I++)
+	{
+		//boolean for correct vs. incorrect answers
+		bool word_incorrect = true;
+		while (word_incorrect == true)
+		{
+			//select and scramble random word
+			int selectedWordIndex = rand() % keywords.size();
+			string selectedword = keywords[selectedWordIndex];
+			string shuffleword = selectedword;
+			random_shuffle(shuffleword.begin(), shuffleword.end());
+			// User guess
+			cout << "try and guess this word " << shuffleword << ":\n";
+			string input = "";
+			cin >> input;
+			//move on if correct guess and display hint if wrong
+			if (input == selectedword)
+			{
+				word_incorrect = false;
+			}
+			else
+			{
+				cout << "here is a hint: " << hints[selectedWordIndex] << "\n";
+			}
+		}
+	}
+	system("pause");
+	
+
+
+	return 0;
+}
