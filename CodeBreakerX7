@@ -1,0 +1,105 @@
+// Assignment7.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <ctime>
+#include <iostream>
+#include <string> 
+
+
+
+using namespace std;
+int main()
+{// Display Title of program to user
+	cout << "Welcome to codebreaker 2.0\n\n";
+// Ask the recruit to login using thier name
+	cout << "tell us your name this time: \n";
+	// Hold the recruit's name in a var, and address them by it throughout the simulation.
+	string name;
+	cin >> name;
+	// Display an overview of what Keywords II is to the recruit 
+	cout << "Well, " << name << " it is time. \n\n";
+	// Display any directions to the recruit on how to use Keywords
+	cout << "You will be shown a blank word that is equal to the number of letters in *'s\n\n";
+	cout << "too many wrong answers and it's all over.\n";
+	// Create a collection of 10 words you had wrote down manually
+	string words[] = { "love", "hate", "money", "pup", "bite", "D.Va", "13", "Chihuahua", "Naruto", "Fire" };
+	//random # Generator
+	srand((unsigned int)time(NULL));
+	// Pick new 3 random words from your collection as the secret code word the recruit has to guess.
+	string keywords[3];
+	for (int i = 0; i < 3; i++)
+	{
+		int random = rand() % 10;
+		keywords[i] = words[random];
+	}
+	// While recruit hasn’t made too many incorrect guesses and hasn’t guessed the secret word
+	for (int p = 0; p < 3; p++)
+	{//Making a variable for the secret letters
+		string mass = keywords[p];
+		for (unsigned int c = 0; c < mass.length(); c++)
+		{
+		mass[c] = '*';
+		}
+
+		cout << "Please begin Sim # " << p + 1 << "\n";
+		int wrong = 0;
+		while (wrong < 3)
+		{//     Show recruit the letters he or she has guessed
+			cout << "Guesses left: " << 3 - wrong << "\n";
+			//     Show player how much of the secret word he or she has guessed
+			cout << name << " here's what you got so far " << mass << "\n";
+
+			bool badGuess = true;
+			char input;
+			while (badGuess)
+			{//     Get recruit's next guess
+				cout << "Input a letter: \n";
+				cin >> input;
+				//     Add the new guess to the group of used letters
+				badGuess = false;
+				
+				for (unsigned int c = 0; c < mass.length(); c++)
+				{
+					if (mass[c] == input) { badGuess = true; }
+				}
+			}
+			//     Tell recruit how many incorrect guesses he or she has left
+			bool goodGuess = false;
+			//     If the guess is in the secret word
+			for (unsigned int c = 0; c < mass.length(); c++)
+			{
+				if (keywords[p][c] == input)
+				{
+					mass[c] = input;
+					goodGuess = true;
+				}
+			}
+			//          Tell the recruit the guess is incorrect
+			if (!goodGuess)
+			{
+				wrong++;
+				cout << "Wrong!\n";
+			}
+			//          Tell the recruit the guess is correct
+			if (mass == keywords[p])
+			{
+				cout << "That's right! " << name << "\n";
+				break;
+			}
+			else
+			{
+				cout << "Not yet, Keep trying!\n\n";
+			}
+			
+		}
+		;
+		//Tell the system to pause once program is done
+		if (p == 3)
+			cout << "All done!\n\n";
+	}
+	cout << "All done!\n\n";
+	system("pause");
+
+	return 0;
+}
