@@ -1,0 +1,166 @@
+// Final Project.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <windows.h>
+#include <iostream>
+#include <string>
+#include <chrono>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+DWORD WINAPI threadProc()
+{
+	for (int i = 0; ; ++i)
+	{
+		std::cout << i << '\n';
+		Sleep(900);
+	}
+
+	return 0;
+}
+
+int GetNumberFromUser(string prompt)
+{
+	cout << prompt << "\n\n";
+	int input;
+	cin >> input;
+	return input;
+}
+
+
+int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+	LPSTR lpszCmdLine, int iCmdShow)
+{
+	printf ("I am the wizard who holds this bridge, and you must answer three simple questions.\n\n");
+	system("pause");
+	printf("For the first question, we look back on the history of the ...\n\n");
+	system("pause");
+	printf("Wait, where are my manners.\n\n What is your name?\n\n");
+	string name;
+	cin >> name;
+	printf("You? Did you really say that name?\n");
+	system("pause");
+	cout << "The name " << name << " has been told in legends for nearly a millennium.\n\n";
+	printf("The story goes back to the time of agriculture and dragons, a sword can be found in a stone.\n");
+	system("pause");
+	printf("Legend says only a powerful magus can pull the sword from the stone and on that stone is written a name.\n\n");
+	cout << "That name is " << name << "\n.";
+	printf("That sword is across this bridge and I shall test whomever wishes to find it.\n");
+	printf("I shall now ask you the real first question of my test.\n\n");
+	cout << "You will be shown a blank word that is equal to the number of letters in *'s\n\n";
+	cout << "Too many wrong guesses and it's all over.\n";
+	cout << "What are the Chinese elemtents?";
+	
+	string words[] = { "earth", "air", "fire", "wood", "metal" };
+	//random # Generator
+	srand((unsigned int)time(NULL));
+	// Pick new 5 words from your collection as the secret code word the recruit has to guess.
+	string keywords[5];
+	for (int i = 0; i < 5; i++)
+	{
+		int random = rand() % 10;
+		keywords[i] = words[random];
+	}
+	// While player hasn’t made too many incorrect guesses and hasn’t guessed the secret word
+	for (int p = 0; p < 5; p++)
+	{//Making a variable for the secret letters
+		string mass = keywords[p];
+		for (unsigned int c = 0; c < mass.length(); c++)
+		{
+			mass[c] = '*';
+		}
+
+		cout << "Please try word # " << p + 1 << "\n";
+		int wrong = 0;
+		while (wrong < 3)
+		{//Show player the amoubt of guesses left
+			cout << "You have " << 3 - wrong << " guesses left:\n";
+			//Show player how much of the secret word he or she has guessed
+			cout << name << " here's what you you know so far " << mass << "\n";
+
+			bool badGuess = true;
+			char input;
+			while (badGuess)
+			{// Get player's next guess
+				cout << "Give me a letter good sir: \n";
+				cin >> input;
+				//Add the new guess to the group of used letters
+				badGuess = false;
+
+				for (unsigned int c = 0; c < mass.length(); c++)
+				{
+					if (mass[c] == input) { badGuess = true; }
+				}
+			}
+			//Tell player how many incorrect guesses he or she has left
+			bool goodGuess = false;
+			// If the guess is in the secret word
+			for (unsigned int c = 0; c < mass.length(); c++)
+			{
+				if (keywords[p][c] == input)
+				{
+					mass[c] = input;
+					goodGuess = true;
+				}
+			}
+			// Tell the recruit the guess is incorrect
+			if (!goodGuess)
+			{
+				wrong++;
+				cout << "Wrong!\n";
+			}
+			//Tell the recruit the guess is correct
+			if (mass == keywords[p])
+			{
+				cout << "That's right! " << name << "\n";
+				break;
+			}
+			else
+			{
+				cout << "Not yet, Keep trying!\n\n";
+			}
+
+		}
+		;
+	}
+	system("pause");
+	printf("Wow you seem to know your stuff, you might just be the one..\n");
+	printf("Next question! ");
+	string x = "How much wood would a wood chuck chuck if a woodchuck could chuck wood?";
+	int y = GetNumberFromUser(x);
+	if (y > 0)
+	{
+		cout << "That is the closest answer I've ever heard!\n\n You pass the second test!\n";
+	}
+	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)threadProc, NULL, 0, NULL);
+
+	int i;
+	std::cin >> i;
+
+	return ERROR_SUCCESS;
+}
+
+//int main()
+//{
+	
+	//start the clock
+	//auto start = chrono::steady_clock::now();
+	//start duration timer
+	//for (int i = 0; i < 1e7; i++)
+	//{
+		//std::cout << "";
+	//}
+	//std::chrono::duration <int, std::milli> d(60000);
+	//get the end time
+	//auto end = std::chrono::steady_clock::now();
+	//find the difference
+	//double elapsed_time = double(std::chrono::duration_cast <std::chrono::seconds> (end - start).count());
+	// output
+	//if ;
+	
+	//std::cout << "Elapsed time (s): " << elapsed_time << "\n\n";
+
+	//system("pause");
+	//return 0;
+//}
