@@ -1,0 +1,44 @@
+// Assignment8.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+// Setting up the input string function
+string GetTextFromUser(string prompt)
+{
+	cout << prompt << "\n\n";
+		string input;
+		cin >> input;
+		return input;
+}
+//Setting up the input integer function
+int GetNumberFromUser(string prompt)
+{
+	cout << prompt << "\n\n";
+	int input;
+	cin >> input;
+	return input;
+}
+int main()
+{//Presenting the fictional conversation
+	string x = "Do you know what movie this quote is from? yes or no?\n\n  'Aha 2 fruits, 1 vegetable, and one flower.  Y ensalda, con tomate?'";
+	string y = GetTextFromUser(x);
+	// User answer changes what the follow up statement is
+	if (y == "yes")
+	{
+		x = "What do you rate this movie?";
+		int yi = GetNumberFromUser(x);
+		cout << "That number isn't high enough! Zoro: The Gay Blade is one of the greatest movies of all time!\n\n";
+	}
+	// If you didnt know the movie quote, relay this important message
+	else if (y == "no")
+	{
+		cout << "Go watch Zoro: The Gay Blade right now!\n";
+	}
+	system("pause");
+    return 0;
+}
