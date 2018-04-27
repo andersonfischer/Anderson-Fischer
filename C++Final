@@ -1,0 +1,90 @@
+// FinalProject2.cpp : Defines the entry point for the console application.
+//
+
+#include "stdafx.h"
+//additional header file
+#include <windows.h>
+#include <iostream>
+#include <string>
+#include <chrono>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
+DWORD WINAPI threadProc()
+{//for loop for the countdown timer(actually adds up instead of countdown)
+	for (int i = 0; ; ++i)
+	{//the sleep function makes the program wait for the specified time(in this case 900s or 15 min)
+		std::cout << i << '\n';
+		Sleep(900);
+	}
+
+	return 0;
+}
+
+//The main function for communication and eventually starting the countdown
+int main(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+	LPSTR lpszCmdLine, int iCmdShow)
+{//Story for our time bot and it's rules
+	printf("//after a few questions, the program will countdown until the timer runs out.");
+	printf("I am the wizard who holds this bridge, and you must answer three simple questions.\n\n");
+	system("pause");
+	printf("For the first question, we look back on the history of the ...\n\n");
+	system("pause");
+	printf("Wait, where are my manners.\n\n What is your name?\n\n");
+	//simple variable input by player
+	string name;
+	cin >> name;
+	printf("You? Did you really say that name?\n");
+	system("pause");
+	//Program calling player by that name
+	cout << "The name " << name << " has been told in legends for nearly a millennium.\n\n";
+	printf("The story goes back to the time of agriculture and dragons, a sword can be found in a stone.\n");
+	system("pause");
+	printf("Legend says only a powerful magus can pull the sword from the stone and on that stone is written a name.\n\n");
+	cout << "That name is " << name << "\n.";
+	printf("That sword is across this bridge and I shall test whomever wishes to find it.\n");
+	printf("I shall now ask you the second question of my test because I've already asked you the first.  ;)\n\n");
+	printf("Which of the Marvel Cinematic Universe movies is the best?\n\n");
+	//simple variable input by player
+	string movie;
+	cin >> movie;
+	cout << "Wow that's exactly right, the first Avengers movie is the best";
+	printf("Now for the final ultimate test to see if you are worthy.\n\nThis test will be the hardest yet, a test of endurance and patience.\n\n");
+	printf("You must now sit for 900 seconds and reflect on what you've learned today.\n\n  When it is done, get up and go claim your treasure outside!");
+	//Creates thread to begin the up count to 900 seconds
+	CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)threadProc, NULL, 0, NULL);
+	//call variable for seconds every second
+	int i;
+	std::cin >> i;
+	return ERROR_SUCCESS;
+
+	//Exits the program upon completion
+	//system("quick_exit");
+}
+
+//A large group of programs I tried to make the stopwatch work.  The one i decided on was not the best, but the only one I could get to work.  
+
+
+//int main()
+//{
+
+//start the clock
+//auto start = chrono::steady_clock::now();
+//start duration timer
+//for (int i = 0; i < 1e7; i++)
+//{
+//std::cout << "";
+//}
+//std::chrono::duration <int, std::milli> d(60000);
+//get the end time
+//auto end = std::chrono::steady_clock::now();
+//find the difference
+//double elapsed_time = double(std::chrono::duration_cast <std::chrono::seconds> (end - start).count());
+// output
+//if ;
+
+//std::cout << "Elapsed time (s): " << elapsed_time << "\n\n";
+
+//system("pause");
+//return 0;
+//}
