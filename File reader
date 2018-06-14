@@ -1,0 +1,31 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+
+
+using namespace std;
+
+int main()
+{
+	string line;
+	ifstream infile("TextFile1.txt");
+	ofstream outfile("output.txt");
+
+	if (infile.is_open())
+	{
+		if (outfile.is_open())
+		{
+			while (getline(infile, line))
+			{
+				cout << line << endl;
+				outfile << line << "\n\n";
+			}
+			infile.close();
+			outfile.close();
+		}
+		else cout << "unable to open output file" << endl;
+	}
+	else cout << "unable to open input file" << endl;
+	system("pause");
+	return 0;
+}
